@@ -7,11 +7,13 @@ import {
   Query,
   Delete,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { BookmarksService } from './bookmarks.service';
 import { Bookmark } from './bookmark.model';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { GetBookmarkDto } from './dto/get-bookmark.dto';
+import { JwtAuthGuard } from 'src/jwt-auth/jwt-auth.guard';
 
 @Controller('bookmarks')
 export class BookmarksController {
@@ -31,6 +33,7 @@ export class BookmarksController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   createBookmark(@Body() createBookmarkDto: CreateBookmarkDto): Bookmark {
     return this.bookmarkService.createBookmark(createBookmarkDto);
   }
